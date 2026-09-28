@@ -83,10 +83,37 @@ Commit: [`ddfb2f7`](https://github.com/kliddle29/Final-Tool-Revision/commit/ddfb
 
 ---
 
+### Follow-up 2: the centered-patch fix made it worse, not better
+
+**Issue Identified:** The centered, larger patch from the follow-up
+above didn't fix it either -- it introduced a second visible problem.
+
+**Feedback Evidence:** Direct report: "i can see my normal cursor and
+then glitching parts of 2 more when magnifying." Not one lingering
+cursor -- two separate glitching fragments.
+
+**Design Change Implemented:** That second fragment was the fix
+itself. Pasting a patch of pixels sampled from elsewhere in the frame
+over a guessed position doesn't fail silently when the guess is off --
+it pastes in visibly different content at the wrong spot, which reads
+as its own glitch on top of the original one. Replaced the whole
+approach: instead of sampling different pixels from elsewhere, this
+now blurs the same source pixels in place, clipped to a generous area
+around the guessed position. A wrong guess now just softens harmless
+nearby content instead of creating new visibly wrong content. Verified
+by rendering the actual clip-and-filter logic in a browser against a
+synthetic frame with a fake cursor deliberately offset from the guess
+position, and confirmed visually it produced one clean blur, not a
+second artifact, before this shipped.
+
+Commit: [`77d9206`](https://github.com/kliddle29/Final-Tool-Revision/commit/77d9206)
+
+---
+
 ## Updated Tool
 
 Standalone download (native app, no web deployment, same reasoning as
-the prior two submissions): [Magnifying Glass v0.3.1](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.1/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
+the prior two submissions): [Magnifying Glass v0.3.2](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.2/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
 `Magnifying Glass.app`. Unsigned, so right-click -> Open on first launch.
 
 Screenshot of the revised interface (the new region-selection screen --
