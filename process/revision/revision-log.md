@@ -110,10 +110,41 @@ Commit: [`77d9206`](https://github.com/kliddle29/Final-Tool-Revision/commit/77d9
 
 ---
 
+### Follow-up 3: the blur itself had two sizing bugs
+
+**Issue Identified:** The blur from follow-up 2 was still wrong, in
+two new ways this time.
+
+**Feedback Evidence:** Direct report: "now its super blurred for some
+reason, along with this i can still see my actual cursor and the
+enlarged cursor."
+
+**Design Change Implemented:** Two real bugs, found by actually
+rendering the logic and looking at it instead of trusting the numbers.
+First, the radius formula's scale factor canceled out algebraically,
+so a "26pt" radius was actually a 78-pixel destination radius -- on a
+180px lens, that's most of it, which is exactly "super blurred."
+Second, the blur circle was centered on the cursor's hotspot, but a
+real arrow glyph extends down and right from its hotspot, not
+symmetrically around it, so the glyph's own tip still poked out past
+the circle's edge -- a sharp cursor fragment sitting right next to a
+big soft blur, which reads exactly like "the enlarged cursor." Cut the
+radius down substantially and shifted the circle's center toward the
+glyph's actual extent instead of the hotspot. This time verified by
+rendering the exact clip+filter+drawImage logic against a synthetic
+frame with a realistic arrow-shaped test glyph, across several
+parameter combinations side by side, and visually confirming the
+shape was fully contained before picking final numbers -- not just
+computing them and assuming.
+
+Commit: [`173e90a`](https://github.com/kliddle29/Final-Tool-Revision/commit/173e90a)
+
+---
+
 ## Updated Tool
 
 Standalone download (native app, no web deployment, same reasoning as
-the prior two submissions): [Magnifying Glass v0.3.2](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.2/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
+the prior two submissions): [Magnifying Glass v0.3.3](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.3/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
 `Magnifying Glass.app`. Unsigned, so right-click -> Open on first launch.
 
 Screenshot of the revised interface (the new region-selection screen --
