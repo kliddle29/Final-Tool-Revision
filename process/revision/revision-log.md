@@ -58,10 +58,35 @@ Commit: [`4520ee1`](https://github.com/kliddle29/Final-Tool-Revision/commit/4520
 
 ---
 
+### Follow-up: the cursor-erasure fix (entry 1) had a real gap
+
+**Issue Identified:** After entry 1 shipped, further testing found the
+cursor was still visible inside the lens.
+
+**Feedback Evidence:** Direct report while actually using the tool:
+"we still have the magnifier glitch where the cursor is visible, it
+shouldn't be at all."
+
+**Design Change Implemented:** Re-reading the fix found a real bug:
+the erasure patch anchored its top-left corner to the cursor's hotspot
+instead of centering on it, so it only ever covered the down-right
+direction. That mattered because `getDisplayMedia()` has real capture
+latency independent of anything this app controls, so while the cursor
+is actively moving, the frame's baked-in cursor can sit a real
+distance from where the patch gets drawn, in any direction. Centered
+the patch and made it moderately larger for margin. Documented
+honestly in the README as a heuristic, not a guarantee -- it depends
+on capture latency this app does not control, so a very fast swipe may
+still show it briefly.
+
+Commit: [`ddfb2f7`](https://github.com/kliddle29/Final-Tool-Revision/commit/ddfb2f7)
+
+---
+
 ## Updated Tool
 
 Standalone download (native app, no web deployment, same reasoning as
-the prior two submissions): [Magnifying Glass v0.3.0](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.0/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
+the prior two submissions): [Magnifying Glass v0.3.1](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.1/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
 `Magnifying Glass.app`. Unsigned, so right-click -> Open on first launch.
 
 Screenshot of the revised interface (the new region-selection screen --
