@@ -55,3 +55,15 @@ dragged rectangle exactly once converted through the display's scale
 factor.
 
 Commit: [`4520ee1`](https://github.com/kliddle29/Final-Tool-Revision/commit/4520ee1)
+
+---
+
+## Updated Tool
+
+Standalone download (native app, no web deployment, same reasoning as
+the prior two submissions): [Magnifying Glass v0.3.0](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.0/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
+`Magnifying Glass.app`. Unsigned, so right-click -> Open on first launch.
+
+Screenshot of the revised interface (the new region-selection screen --
+drag a rectangle, teal border shows the selection, Esc cancels):
+`region-selection-ui.png`, in this same folder.
