@@ -1,4 +1,4 @@
-# magnifying-glass-tool
+# Final Tool Revision — Magnifying Glass
 
 A system-wide screen magnifier for macOS. It floats an always-on-top,
 click-through lens that follows your cursor and shows a zoomed view of
@@ -6,6 +6,13 @@ whatever's under it — any app, not just a browser tab.
 
 Started as a Chrome extension (DOM-clone based, browser-only); rewritten
 as an Electron app so it can see the whole screen. Pure magnifier — no AI.
+
+This repo is for the Final Tool Revision assignment: two real changes
+made directly in response to the Usability Evaluation findings. See
+`process/revision/revision-log.md` for the Issue / Evidence / Change
+writeup, `process/revision/key-usability-findings.md` for the summary,
+and `process/usability/` for the original test materials this pass is
+based on.
 
 ## Setup
 
