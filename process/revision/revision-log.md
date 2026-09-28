@@ -41,12 +41,17 @@ running this app and a separate screen recorder side by side.
 needing a second tool just to capture a session -- two things to
 start, stop, and keep in sync instead of one.
 
-**Design Change Implemented:** The same toggle that turns the lens on
-now also starts recording that session with `MediaRecorder`, saved as
-a video file on the Desktop the moment the lens turns back off. No
-second app. Picks whichever video format the installed Electron
-actually supports at runtime instead of assuming one, and was tested
-end to end (real files written, confirmed as valid video containers,
-not just non-empty data).
+**Design Change Implemented:** Recording is now built directly into
+this app, with its own toggle (⌘⇧R, or "Record a Region..." in the
+menu bar) entirely independent of the magnifier -- turning one on or
+off never touches the other. Pressing it dims the screen and lets you
+drag out exactly the region you want, the same interaction as macOS's
+own screenshot tool; releasing starts recording just that region,
+saved to the Desktop when you stop. No second app needed for either
+piece. Verified end to end through the real UI, not just the backend:
+a simulated drag was sent into the actual selection window, and the
+saved file's pixel dimensions were confirmed (via `mdls`) to match the
+dragged rectangle exactly once converted through the display's scale
+factor.
 
-Commit: [`e411db9`](https://github.com/kliddle29/Final-Tool-Revision/commit/e411db9)
+Commit: [`4520ee1`](https://github.com/kliddle29/Final-Tool-Revision/commit/4520ee1)
