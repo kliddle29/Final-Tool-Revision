@@ -141,10 +141,37 @@ Commit: [`173e90a`](https://github.com/kliddle29/Final-Tool-Revision/commit/173e
 
 ---
 
+### Follow-up 4: the blur itself was the wrong call, not just mistuned
+
+**Issue Identified:** After follow-up 3 shipped with the corrected
+blur, direct feedback on actually using it was that it looked bad --
+not a sizing bug this time, a rejection of blurring at all.
+
+**Feedback Evidence:** Direct report: "your blur fix for the cursor
+looks horrible and defeats the entire purpose of it magnifying the
+selected region. Instead, let's just fully show the cursor. That way,
+the magnifying still functions."
+
+**Design Change Implemented:** Three prior rounds (entry 1's patch,
+follow-up 2's switch to blur, follow-up 3's radius/offset correction)
+all treated this as a sizing or artifact problem to tune away. It
+wasn't -- softening any part of the exact region a magnifier is
+supposed to be showing clearly is a real cost, not a rendering detail,
+and no amount of radius tuning removes that cost. Removed
+`blurCursorArea()` entirely rather than adjusting it again. The lens
+now draws the captured frame as-is, cursor included, the same as
+before any cursor-hiding attempt this session. The underlying
+Chromium limitation (no capture-level way to exclude the cursor) is
+unchanged and is no longer worked around at all.
+
+Commit: [`4db4406`](https://github.com/kliddle29/Final-Tool-Revision/commit/4db4406)
+
+---
+
 ## Updated Tool
 
 Standalone download (native app, no web deployment, same reasoning as
-the prior two submissions): [Magnifying Glass v0.3.3](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.3/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
+the prior two submissions): [Magnifying Glass v0.3.4](https://github.com/kliddle29/Final-Tool-Revision/releases/download/v0.3.4/Magnifying-Glass-macOS-arm64.zip) -- unzip and open
 `Magnifying Glass.app`. Unsigned, so right-click -> Open on first launch.
 
 Screenshot of the revised interface (the new region-selection screen --
